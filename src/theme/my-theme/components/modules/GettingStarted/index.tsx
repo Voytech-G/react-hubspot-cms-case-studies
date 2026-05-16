@@ -6,7 +6,8 @@ import {
 } from '@hubspot/cms-components/fields';
 import { RichText } from '@hubspot/cms-components';
 import logo from '../../../assets/sprocket.svg';
-import styles from '../../../styles/getting-started.module.css';
+import '../../../styles/theme.css';
+import styles from './GettingStarted.module.css';
 
 type GettingStartedFieldValues = {
   logo: { src: string; alt: string; width: number; height: number };

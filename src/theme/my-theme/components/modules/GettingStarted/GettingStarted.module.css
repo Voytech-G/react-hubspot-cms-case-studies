@@ -1,9 +1,3 @@
-:root {
-  --primary-color: #ff7a59;
-  --accent-color: #2d3e50;
-  --custom-color: #5e6ab8;
-}
-
 .wrapper {
   font-family: sans-serif;
   display: flex;
@@ -12,13 +6,13 @@
   text-align: center;
   flex-direction: column;
   color: white;
-  background-color: var(--custom-color);
+  background-color: var(--color-surface-accent);
   height: 50vh;
   min-height: 500px;
 
   & pre {
     display: inline-block;
-    color: var(--primary-color);
+    color: var(--color-primary);
     font-weight: bold;
     font-size: 0.9rem;
   }
@@ -32,8 +26,8 @@
 
     & a {
       text-decoration: none;
-      color: white;
-      background-color: var(--primary-color);
+      color: var(--color-text-inverse);
+      background-color: var(--color-primary);
       padding: 10px 20px;
       border-radius: 5px;
     }
