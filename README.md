@@ -20,7 +20,7 @@ presentational module and progressing toward interactive and data-driven modules
 | #   | Module                      | Concept                                                              | Status  |
 | --- | --------------------------- | -------------------------------------------------------------------- | ------- |
 | CS1 | FeatureCard                 | Presentational module — typed props, multiple field types, CSS Modules | Done    |
-| CS2 | Accordion / Tabs / Carousel | Interactive modules with Islands (client-side hydration)             | In progress (Accordion done) |
+| CS2 | Accordion / Tabs / Carousel | Interactive modules with Islands (client-side hydration)             | In progress (Accordion, Tabs done) |
 | CS3 | HubDB module                | Dynamic content sourced from a HubDB table                           | Planned |
 | CS4 | API module                  | External data via HubSpot serverless functions                       | Planned |
 
