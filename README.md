@@ -17,12 +17,12 @@ presentational module and progressing toward interactive and data-driven modules
 
 ## Case studies
 
-| #   | Module                      | Concept                                                              | Status  |
-| --- | --------------------------- | -------------------------------------------------------------------- | ------- |
-| CS1 | FeatureCard                 | Presentational module — typed props, multiple field types, CSS Modules | Done    |
-| CS2 | Accordion / Tabs / Carousel | Interactive modules with Islands (client-side hydration)             | Done    |
-| CS3 | Team Directory              | Comparative data fetching — one shared UI, multiple data sources (getServerSideProps, hublDataTemplate, GraphQL/HubDB) | In progress |
-| CS4 | API module                  | External data via HubSpot serverless functions                       | Planned |
+| #   | Module                      | Concept                                                                                                                | Status  |
+| --- | --------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------- |
+| CS1 | FeatureCard                 | Presentational module — typed props, multiple field types, CSS Modules                                                 | Done    |
+| CS2 | Accordion / Tabs / Carousel | Interactive modules with Islands (client-side hydration)                                                               | Done    |
+| CS3 | Team Directory              | Comparative data fetching — one shared UI, multiple data sources (getServerSideProps, hublDataTemplate, GraphQL/HubDB) | Done    |
+| CS4 | API module                  | External data via HubSpot serverless functions                                                                         | Planned |
 
 ## Project structure
 
