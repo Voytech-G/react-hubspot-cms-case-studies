@@ -3,9 +3,8 @@ import {
   TextField,
   NumberField,
 } from '@hubspot/cms-components/fields';
-import type { Person } from './types.ts';
-import '../../../styles/theme.css';
-import styles from './TeamDirectory.module.css';
+import type { Person } from '../../shared/PeopleGrid/types.ts';
+import { PeopleGrid } from '../../shared/PeopleGrid/PeopleGrid.tsx';
 
 type TeamDirectoryFields = {
   heading: string;
@@ -50,24 +49,8 @@ export const getServerSideProps = async () => {
 export function Component({ fieldValues, serverSideProps }: ComponentProps) {
   const { heading, limit } = fieldValues;
   const people = serverSideProps?.people ?? [];
-  const visiblePeople = people.slice(0, limit);
 
-  return (
-    <section className={styles.directory}>
-      <h2 className={styles.heading}>{heading}</h2>
-      <ul className={styles.list}>
-        {visiblePeople.map((person) => (
-          <li key={person.id} className={styles.card}>
-            <h3 className={styles.name}>{person.name}</h3>
-            <p className={styles.company}>{person.company}</p>
-            <a href={`mailto:${person.email}`} className={styles.email}>
-              {person.email}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
+  return <PeopleGrid heading={heading} people={people.slice(0, limit)} />;
 }
 
 export const fields = (
