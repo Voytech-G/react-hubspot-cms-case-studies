@@ -9,7 +9,7 @@ presentational module and progressing toward interactive and data-driven modules
 ## Tech stack
 
 - **HubSpot CMS React** (`@hubspot/cms-components`) — the React + HubL framework
-- **HubSpot Projects** — platform version 2025.2
+- **HubSpot Projects** — platform version 2026.3
 - **React 18** + **TypeScript**
 - **CSS Modules** for component-scoped styles
 - **Global design tokens** (`:root` CSS custom properties) in `styles/theme.css`
@@ -31,22 +31,34 @@ src/theme/
 ├── theme-hsmeta.json
 └── my-theme/
     ├── components/
-    │   └── modules/
-    │       ├── GettingStarted/        # Quickstart module (typed props)
-    │       │   ├── index.tsx
-    │       │   └── GettingStarted.module.css
-    │       └── FeatureCard/           # CS1 — presentational module
-    │           ├── index.tsx
-    │           └── FeatureCard.module.css
+    │   ├── modules/
+    │   │   ├── GettingStarted/         # Quickstart module
+    │   │   ├── FeatureCard/            # CS1 — presentational module
+    │   │   ├── Accordion/              # CS2 — interactive island
+    │   │   ├── Tabs/                   # CS2 — interactive island
+    │   │   ├── Carousel/               # CS2 — interactive island (useEffect)
+    │   │   ├── TeamDirectory/          # CS3 — data via getServerSideProps
+    │   │   ├── TeamDirectoryHubL/      # CS3 — data via hublDataTemplate
+    │   │   └── TeamDirectoryGraphQL/   # CS3 — data via GraphQL
+    │   └── shared/
+    │       └── PeopleGrid/             # Shared presentational component (CS3)
     ├── styles/
-    │   └── theme.css                  # Global design tokens (:root variables)
+    │   └── theme.css                   # Global design tokens (:root variables)
     ├── templates/
-    │   ├── layouts/base.hubl.html
+    │   ├── layouts/
+    │   │   └── base.hubl.html
     │   ├── page.hubl.html
-    │   └── showcase.hubl.html         # Drag & drop template for showcasing modules
+    │   └── showcase.hubl.html          # Drag & drop showcase template
     ├── assets/
-    └── theme.json
+    ├── Globals.d.ts                    # Ambient module declarations (*.module.css, *?island)
+    ├── theme.json
+    └── tsconfig.json
 ```
+
+Each module folder holds an `index.tsx` (the module shell) plus its co-located
+`*.module.css`. Interactive CS2 modules also include a `*Island.tsx` (the hydrated
+part) and a `types.ts`. CS3 module shells are thin — they fetch data and hand it
+to the shared `PeopleGrid`.
 
 ### Conventions
 
@@ -57,6 +69,10 @@ src/theme/
   `fields`, and `meta`.
 - Module props are explicitly typed (no `any`); the props type mirrors the
   `fields` definition.
+- Interactive modules split into a server-rendered shell and a hydrated
+  `*Island.tsx` component, referenced with the `?island` import suffix.
+- Reusable presentation lives in `components/shared/`, so several modules can
+  feed one UI while swapping only the data layer.
 
 ## Local development
 
