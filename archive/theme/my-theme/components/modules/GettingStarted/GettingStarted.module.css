@@ -1,0 +1,35 @@
+.wrapper {
+  font-family: sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  color: white;
+  background-color: var(--color-surface-accent);
+  height: 50vh;
+  min-height: 500px;
+
+  & pre {
+    display: inline-block;
+    color: var(--color-primary);
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  & .buttons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 25px;
+
+    & a {
+      text-decoration: none;
+      color: var(--color-text-inverse);
+      background-color: var(--color-primary);
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
+  }
+}
