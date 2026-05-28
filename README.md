@@ -22,43 +22,66 @@ presentational module and progressing toward interactive and data-driven modules
 | CS1 | FeatureCard                 | Presentational module — typed props, multiple field types, CSS Modules                                                 | Done    |
 | CS2 | Accordion / Tabs / Carousel | Interactive modules with Islands (client-side hydration)                                                               | Done    |
 | CS3 | Team Directory              | Comparative data fetching — one shared UI, multiple data sources (getServerSideProps, hublDataTemplate, GraphQL/HubDB) | Done    |
-| CS4 | API module                  | External data via HubSpot serverless functions                                                                         | Planned |
+| CS4 | CrmContacts                 | Serverless function (`app-function`) — calls HubSpot CRM API with a platform-issued token, fetched from an island       | Done    |
 
 ## Project structure
 
 ```
-src/theme/
-├── theme-hsmeta.json
-└── my-theme/
-    ├── components/
-    │   ├── modules/
-    │   │   ├── GettingStarted/         # Quickstart module
-    │   │   ├── FeatureCard/            # CS1 — presentational module
-    │   │   ├── Accordion/              # CS2 — interactive island
-    │   │   ├── Tabs/                   # CS2 — interactive island
-    │   │   ├── Carousel/               # CS2 — interactive island (useEffect)
-    │   │   ├── TeamDirectory/          # CS3 — data via getServerSideProps
-    │   │   ├── TeamDirectoryHubL/      # CS3 — data via hublDataTemplate
-    │   │   └── TeamDirectoryGraphQL/   # CS3 — data via GraphQL
-    │   └── shared/
-    │       └── PeopleGrid/             # Shared presentational component (CS3)
-    ├── styles/
-    │   └── theme.css                   # Global design tokens (:root variables)
-    ├── templates/
-    │   ├── layouts/
-    │   │   └── base.hubl.html
-    │   ├── page.hubl.html
-    │   └── showcase.hubl.html          # Drag & drop showcase template
-    ├── assets/
-    ├── Globals.d.ts                    # Ambient module declarations (*.module.css, *?island)
-    ├── theme.json
-    └── tsconfig.json
+src/
+├── app/                                # CS4 — wrapper app hosting serverless functions
+│   ├── app-hsmeta.json                 # auth (static token, requiredScopes), permittedUrls
+│   └── functions/
+│       ├── crm-contacts-hsmeta.json    # endpoint config (path, methods)
+│       ├── crm-contacts.js             # handler — calls HubSpot CRM API
+│       └── package.json                # Node runtime declaration
+└── theme/
+    ├── theme-hsmeta.json
+    └── my-theme/
+        ├── components/
+        │   ├── modules/
+        │   │   ├── GettingStarted/         # Quickstart module
+        │   │   ├── FeatureCard/            # CS1 — presentational module
+        │   │   ├── Accordion/              # CS2 — interactive island
+        │   │   ├── Tabs/                   # CS2 — interactive island
+        │   │   ├── Carousel/               # CS2 — interactive island (useEffect)
+        │   │   ├── TeamDirectory/          # CS3 — data via getServerSideProps
+        │   │   ├── TeamDirectoryHubL/      # CS3 — data via hublDataTemplate
+        │   │   ├── TeamDirectoryGraphQL/   # CS3 — data via GraphQL
+        │   │   └── CrmContacts/            # CS4 — fetches from a serverless function
+        │   └── shared/
+        │       └── PeopleGrid/             # Shared presentational component (CS3)
+        ├── styles/
+        │   └── theme.css                   # Global design tokens (:root variables)
+        ├── templates/
+        │   ├── layouts/
+        │   │   └── base.hubl.html
+        │   ├── page.hubl.html
+        │   └── showcase.hubl.html          # Drag & drop showcase template
+        ├── assets/
+        ├── Globals.d.ts                    # Ambient module declarations (*.module.css, *?island)
+        ├── theme.json
+        └── tsconfig.json
 ```
 
 Each module folder holds an `index.tsx` (the module shell) plus its co-located
 `*.module.css`. Interactive CS2 modules also include a `*Island.tsx` (the hydrated
 part) and a `types.ts`. CS3 module shells are thin — they fetch data and hand it
-to the shared `PeopleGrid`.
+to the shared `PeopleGrid`. CS4 wraps a serverless function in `src/app/` and the
+React module is an island that calls it via `/hs/serverless/<endpoint>`.
+
+### CS4 — serverless functions (notes)
+
+The `Case Studies App` is declared in `src/app/app-hsmeta.json` with
+`auth.type: "static"` and `requiredScopes: ["crm.objects.contacts.read"]`. After
+`hs project upload` the developer installs the app once in the portal; HubSpot
+then issues a private-app access token and exposes it to the function as
+`process.env.PRIVATE_APP_ACCESS_TOKEN` — no secret is hand-rolled or stored in
+`secretKeys`. Outbound calls from the function are restricted to the hosts listed
+in `permittedUrls.fetch`.
+
+Public endpoint functions (`endpoint.path` in the function hsmeta) require
+**Content Hub Enterprise**. The endpoint is callable from the CMS frontend at
+`/hs/serverless/<path>` (no `api/` prefix on platform 2026.03).
 
 ### Conventions
 

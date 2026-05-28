@@ -1,0 +1,9 @@
+{
+  "name": "case-studies-functions",
+  "version": "1.0.0",
+  "description": "Serverless functions for the case studies portfolio.",
+  "main": "crm-contacts.js",
+  "engines": {
+    "node": ">=20"
+  }
+}

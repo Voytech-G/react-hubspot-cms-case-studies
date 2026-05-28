@@ -1,0 +1,12 @@
+{
+  "uid": "crm-contacts-function",
+  "type": "app-function",
+  "config": {
+    "entrypoint": "/app/functions/crm-contacts.js",
+    "secretKeys": [],
+    "endpoint": {
+      "path": "crm-contacts",
+      "methods": ["GET"]
+    }
+  }
+}

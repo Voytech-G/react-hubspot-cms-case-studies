@@ -1,0 +1,18 @@
+{
+  "uid": "case-studies-app",
+  "type": "app",
+  "config": {
+    "name": "Case Studies App",
+    "description": "Wrapper app hosting serverless functions for the case studies portfolio.",
+    "distribution": "private",
+    "auth": {
+      "type": "static",
+      "requiredScopes": ["crm.objects.contacts.read"]
+    },
+    "permittedUrls": {
+      "fetch": ["https://api.hubapi.com"],
+      "iframe": [],
+      "img": []
+    }
+  }
+}

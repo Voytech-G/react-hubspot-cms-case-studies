@@ -141,3 +141,6 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# HubSpot CLI migration backup (created by `hs project migrate`)
+archive/
