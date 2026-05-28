@@ -1,0 +1,57 @@
+.wrapper {
+  padding: var(--space-lg);
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+}
+
+.heading {
+  margin: 0 0 var(--space-md) 0;
+  color: var(--color-secondary);
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.error {
+  color: #b00020;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.card {
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-background);
+}
+
+.name {
+  margin: 0 0 var(--space-sm) 0;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.company {
+  margin: 0 0 var(--space-sm) 0;
+  color: var(--color-text-muted);
+  font-size: 0.9em;
+}
+
+.email {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.email:hover {
+  text-decoration: underline;
+}
