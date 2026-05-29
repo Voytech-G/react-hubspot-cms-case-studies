@@ -7,6 +7,7 @@ import {
 } from '@hubspot/cms-components/fields';
 import { RichText } from '@hubspot/cms-components';
 import defaultIcon from '../../../assets/sprocket.svg';
+import '../../../styles/theme.css';
 import styles from './FeatureCard.module.css';
 
 type Alignment = 'left' | 'center';
@@ -31,13 +32,15 @@ export function Component({ fieldValues }: ComponentProps) {
 
   return (
     <article className={styles.card} data-alignment={alignment}>
-      <img
-        className={styles.icon}
-        src={icon.src}
-        alt={icon.alt}
-        width={icon.width}
-        height={icon.height}
-      />
+      <span className={styles.iconWrap}>
+        <img
+          className={styles.icon}
+          src={icon.src}
+          alt={icon.alt}
+          width={icon.width}
+          height={icon.height}
+        />
+      </span>
       <h3 className={styles.heading}>{heading}</h3>
       <div className={styles.description}>
         <RichText fieldPath="description" />

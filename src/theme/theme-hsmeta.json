@@ -1,8 +1,0 @@
-{
-  "uid": "theme",
-  "type": "theme",
-  "config": {
-    "themePath": "my-theme",
-    "secretNames": []
-  }
-}
