@@ -10,6 +10,15 @@ type Props = {
   limit: number;
 };
 
+function getInitials(name: string): string {
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? '')
+    .join('');
+}
+
 export default function CrmContactsIsland({ heading, limit }: Props) {
   const [status, setStatus] = useState<Status>('idle');
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -50,14 +59,17 @@ export default function CrmContactsIsland({ heading, limit }: Props) {
 
   return (
     <div className={styles.wrapper}>
-      <h2 className={styles.heading}>{heading}</h2>
+      <div className={styles.header}>
+        <h2 className={styles.heading}>{heading}</h2>
+        <span className={styles.badge}>Live</span>
+      </div>
 
       {status === 'loading' && (
         <p className={styles.muted}>Loading contacts...</p>
       )}
 
       {status === 'error' && (
-        <p className={styles.eror}>Could not load contacts: {errorMessage}</p>
+        <p className={styles.error}>Could not load contacts: {errorMessage}</p>
       )}
 
       {status === 'success' && contacts.length === 0 && (
@@ -68,6 +80,9 @@ export default function CrmContactsIsland({ heading, limit }: Props) {
         <ul className={styles.list}>
           {contacts.map((contact) => (
             <li key={contact.id} className={styles.card}>
+              <span className={styles.avatar} aria-hidden="true">
+                {getInitials(contact.name)}
+              </span>
               <p className={styles.name}>{contact.name}</p>
               {contact.company && (
                 <p className={styles.company}>{contact.company}</p>

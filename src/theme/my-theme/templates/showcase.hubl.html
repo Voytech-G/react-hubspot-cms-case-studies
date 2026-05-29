@@ -3,19 +3,304 @@
   isAvailableForNewContent: true
   label: Custom React Modules Showcase
 -->
-{% extends "./layouts/base.hubl.html" %} {% block body %} {% dnd_area
-"showcase_area" label="Showcase content" %} {% dnd_section %} {% dnd_column %}
-{% dnd_row %} {% dnd_module path="../components/modules/FeatureCard" %} {%
-end_dnd_module %} {% end_dnd_row %} {% end_dnd_column %} {% end_dnd_section %}
-{% dnd_section %} {% dnd_column %} {% dnd_row %} {% dnd_module
-path="../components/modules/Accordion" %} {% end_dnd_module %} {% end_dnd_row %}
-{% end_dnd_column %} {% end_dnd_section %} {% dnd_section %} {% dnd_column %} {%
-dnd_row %} {% dnd_module path="../components/modules/Tabs" %} {% end_dnd_module
-%} {% end_dnd_row %} {% end_dnd_column %} {% end_dnd_section %} {% dnd_section
-%} {% dnd_column %} {% dnd_row %} {% dnd_module
-path="../components/modules/Carousel" %} {% end_dnd_module %} {% end_dnd_row %}
-{% end_dnd_column %} {% end_dnd_section %} {% dnd_section %} {% dnd_column %} {%
-dnd_row %} {% dnd_module "crm_contacts"
-path="../components/modules/CrmContacts", heading="Latest contacts", limit=10 %}
-{% end_dnd_module %} {% end_dnd_row %} {% end_dnd_column %} {% end_dnd_section
-%} {% end_dnd_area %} {% endblock body %}
+{% extends "./layouts/base.hubl.html" %} {% block body %}
+
+<style>
+  body {
+    margin: 0;
+  }
+
+  .sc-page {
+    --sc-orange: var(--color-primary, #ff7a59);
+    --sc-ink: #e8edf3;
+    --sc-ink-muted: rgba(232, 237, 243, 0.7);
+    --sc-ink-faint: rgba(232, 237, 243, 0.5);
+    --sc-hairline: rgba(255, 255, 255, 0.08);
+
+    min-height: 100vh;
+    background: radial-gradient(
+      1200px 600px at 50% -10%,
+      #243246 0%,
+      #161c27 55%,
+      #10141c 100%
+    );
+    color: var(--sc-ink);
+    font-family: var(
+      --font-family-base,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      Helvetica,
+      Arial,
+      sans-serif
+    );
+  }
+
+  .sc-hero {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 96px 24px 56px;
+    text-align: center;
+  }
+
+  .sc-eyebrow {
+    margin: 0 0 12px;
+    color: var(--sc-orange);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .sc-hero-title {
+    margin: 0 0 16px;
+    color: #fff;
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .sc-hero-sub {
+    margin: 0;
+    color: var(--sc-ink-muted);
+    font-size: 1.15rem;
+    line-height: 1.6;
+  }
+
+  .sc-main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .sc-section {
+    padding: 72px 0;
+    border-top: 1px solid var(--sc-hairline);
+  }
+
+  .sc-section-head {
+    max-width: 640px;
+    margin: 0 0 40px;
+  }
+
+  .sc-kicker {
+    margin: 0 0 10px;
+    color: var(--sc-orange);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .sc-title {
+    margin: 0 0 12px;
+    color: #fff;
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .sc-desc {
+    margin: 0;
+    color: var(--sc-ink-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .sc-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    justify-items: center;
+  }
+
+  .sc-substage + .sc-substage {
+    margin-top: 48px;
+  }
+
+  .sc-sublabel {
+    margin: 0 0 8px;
+    color: var(--sc-orange);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+
+  .sc-subdesc {
+    max-width: 560px;
+    margin: 0 auto 24px;
+    color: var(--sc-ink-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  /* Module-level headings (e.g. "Meet the team") sit on the dark page
+     background, so lift them to a light ink for readability. */
+  .sc-stage h2,
+  .sc-substage h2 {
+    color: #fff;
+  }
+
+  /* CS3: force exactly three cards per row so each variant reads as one
+     compact row in a presentation screenshot. */
+  .sc-substage ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sc-footer {
+    padding: 48px 24px 72px;
+    text-align: center;
+    color: var(--sc-ink-faint);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--sc-hairline);
+  }
+
+  @media (max-width: 640px) {
+    .sc-hero {
+      padding: 64px 20px 40px;
+    }
+    .sc-hero-title {
+      font-size: 2.2rem;
+    }
+    .sc-section {
+      padding: 56px 0;
+    }
+    .sc-substage ul {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="sc-page">
+  <header class="sc-hero">
+    <p class="sc-eyebrow">HubSpot CMS · React</p>
+    <h1 class="sc-hero-title">Custom React Modules</h1>
+    <p class="sc-hero-sub">
+      A progressive collection of modules exploring HubSpot's React CMS
+      framework — from typed presentational components to interactive islands
+      and serverless-backed data. Built during the HubSpot Ecosystem Mentorship.
+    </p>
+  </header>
+
+  <main class="sc-main">
+    <section class="sc-section">
+      <div class="sc-section-head">
+        <p class="sc-kicker">Case Study 01 · Presentational</p>
+        <h2 class="sc-title">Typed, field-driven modules</h2>
+        <p class="sc-desc">
+          A pure server-rendered module with props that mirror its field
+          definition one-to-one — no client JavaScript, just clean composable UI
+          fed by the page editor.
+        </p>
+      </div>
+      <div class="sc-stage sc-grid-3">
+        {% module "cs1_card_1" path="../components/modules/FeatureCard",
+        heading="Typed props", description="Props mirror the field definition
+        one-to-one — no any, no guesswork.", alignment="center" %} {% module
+        "cs1_card_2" path="../components/modules/FeatureCard",
+        heading="Field-driven", description="Every value is editable in the page
+        editor through native HubSpot fields.", alignment="center" %} {% module
+        "cs1_card_3" path="../components/modules/FeatureCard", heading="Scoped
+        styles", description="Co-located CSS Modules consume shared design
+        tokens.", alignment="center" %}
+      </div>
+    </section>
+
+    <section class="sc-section">
+      <div class="sc-section-head">
+        <p class="sc-kicker">Case Study 02 · Interactivity</p>
+        <h2 class="sc-title">Islands that hydrate on demand</h2>
+        <p class="sc-desc">
+          Three interaction patterns — accordion, tabs, and carousel — each
+          shipped as an island that hydrates only when it scrolls into view,
+          leaving the rest of the page static.
+        </p>
+      </div>
+
+      <div class="sc-substage">
+        <p class="sc-sublabel">Accordion</p>
+        {% module "cs2_accordion" path="../components/modules/Accordion" %}
+      </div>
+
+      <div class="sc-substage">
+        <p class="sc-sublabel">Tabs</p>
+        {% module "cs2_tabs" path="../components/modules/Tabs" %}
+      </div>
+
+      <div class="sc-substage">
+        <p class="sc-sublabel">Carousel</p>
+        {% module "cs2_carousel" path="../components/modules/Carousel" %}
+      </div>
+    </section>
+
+    <section class="sc-section">
+      <div class="sc-section-head">
+        <p class="sc-kicker">Case Study 03 · Data fetching</p>
+        <h2 class="sc-title">Server-side data, one shared UI</h2>
+        <p class="sc-desc">
+          A thin module shell fetches data on the server and hands it to one
+          shared presentational grid. Only the data layer changes — the UI stays
+          identical across sources.
+        </p>
+      </div>
+
+      <div class="sc-substage">
+        <p class="sc-sublabel">getServerSideProps · REST</p>
+        <p class="sc-subdesc">
+          The module shell fetches a public REST endpoint (JSONPlaceholder) on
+          the server, caches the response, and maps it into the shared grid.
+        </p>
+        {% module "cs3_team_rest" path="../components/modules/TeamDirectory",
+        heading="Meet the team", limit=3 %}
+      </div>
+
+      <div class="sc-substage">
+        <p class="sc-sublabel">hublDataTemplate · HubDB</p>
+        <p class="sc-subdesc">
+          A HubL data template reads a HubDB table server-side and hands the
+          rows to the component as props — tier-agnostic, no client fetch.
+        </p>
+        {% module "cs3_team_hubl"
+        path="../components/modules/TeamDirectoryHubL", heading="Our team",
+        limit=3 %}
+      </div>
+
+      <div class="sc-substage">
+        <p class="sc-sublabel">GraphQL · HubDB</p>
+        <p class="sc-subdesc">
+          The same UI again — but the rows are queried from HubDB through
+          HubSpot's native GraphQL data binding.
+        </p>
+        {% module "cs3_team_graphql"
+        path="../components/modules/TeamDirectoryGraphQL", heading="The team",
+        limit=3 %}
+      </div>
+    </section>
+
+    <section class="sc-section">
+      <div class="sc-section-head">
+        <p class="sc-kicker">Case Study 04 · Serverless</p>
+        <h2 class="sc-title">Private data via a serverless function</h2>
+        <p class="sc-desc">
+          An island calls a HubSpot serverless function that reads the CRM with
+          a platform-issued token. The secret never reaches the browser — the
+          function trims and returns only what the UI needs.
+        </p>
+      </div>
+      <div class="sc-stage">
+        {% module "cs4_contacts" path="../components/modules/CrmContacts",
+        heading="Latest contacts", limit=6 %}
+      </div>
+    </section>
+  </main>
+
+  <footer class="sc-footer">
+    HubSpot CMS React · Case Study Collection — HubSpot Ecosystem Mentorship
+  </footer>
+</div>
+
+{% endblock body %}
